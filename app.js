@@ -23,6 +23,10 @@ connection.connect(err => {
   console.log("Conected to a MySql");
 });
 
+app.get('/', (req, res) => {
+    res.send("Hello pipol!!")
+})
+
 app.get("/prospects", (req, res) => {
   const sql = "SELECT * FROM prospects";
   connection.query(sql, (err, results) => {
