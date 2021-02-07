@@ -24,7 +24,7 @@ connection.connect(err => {
 });
 
 app.get('/', (req, res) => {
-    res.send(Date.now())
+    res.send(Date.now().toString())
 })
 
 app.get("/prospects", (req, res) => {
