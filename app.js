@@ -1,6 +1,6 @@
 const express = require("express");
 const mysql = require("mysql");
-
+const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const PORT = process.env.PORT || 3001;
@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(bodyParser.json());
-
+app.use(cors());
 //Mysql
 const connection = mysql.createConnection({
   host: "us-cdbr-east-03.cleardb.com",
