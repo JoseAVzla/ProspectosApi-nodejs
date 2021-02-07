@@ -24,7 +24,7 @@ connection.connect(err => {
 });
 
 app.get('/', (req, res) => {
-    res.send("Hello pipol!!")
+    res.send(Date.now())
 })
 
 app.get("/prospects", (req, res) => {
@@ -64,7 +64,7 @@ app.post("/add", (req, res) => {
     cp: req.body.cp,
     telefono: req.body.telefono,
     rfc: req.body.rfc,
-    documento: req.body.documento,
+    documentos: req.body.documentos,
     estatus: "E",
     observacion: ""
   };
