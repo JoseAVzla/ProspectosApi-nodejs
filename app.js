@@ -10,21 +10,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(function (req, res, next) {
-
-  // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');
-
-  // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
   res.setHeader('Access-Control-Allow-Credentials', true);
-
-  // Pass to next layer of middleware
   next();
 });
 //Mysql
@@ -39,11 +28,11 @@ const connection = mysql.createConnection({
 //Check connection
 connection.connect(err => {
   if (err) throw err;
-  console.log("Conected to a MySql");
+  console.log("Conected to MySql");
 });
 
 app.get('/', (req, res) => {
-    res.send(Date.now().toString())
+    res.send(Date())
 })
 
 app.get("/prospects", (req, res) => {
