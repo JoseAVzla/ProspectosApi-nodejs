@@ -29,10 +29,11 @@ app.use(function (req, res, next) {
 });
 //Mysql
 const connection = mysql.createConnection({
-  host: "us-cdbr-east-03.cleardb.com",
-  user: "b267c388befb0a",
-  password: "3bad0384",
-  database: "heroku_c0be54260a1b1b5"
+  host: "db-mysql-sfo2-29346-do-user-8686953-0.b.db.ondigitalocean.com",
+  user: "doadmin",
+  password: "rv3377ryw277zq75",
+  database: "defaultdb",
+  port: 25060, 
 });
 
 //Check connection
@@ -103,3 +104,4 @@ app.patch("/update/:id", (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
