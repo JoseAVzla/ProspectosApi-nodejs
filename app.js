@@ -35,12 +35,19 @@ app.get('/', (req, res) => {
     res.send(Date())
 })
 
-app.get("/prospects", (req, res) => {
+app.get("/prospects/page=:page&limit=:rowsPerPage", (req, res) => {
+  const { page, rowsPerPage } = req.params;
+  let paginatedProspects = [];
   const sql = "SELECT * FROM prospects";
   connection.query(sql, (err, results) => {
     if (err) throw err;
     if (results.length > 0) {
-      res.json(results);
+      paginatedProspects = results.slice((page - 1 ) * rowsPerPage , page * rowsPerPage   );
+      const paginatedResult = {
+        prospects: paginatedProspects,
+        totalItems: results.length
+      }
+      res.json(paginatedResult);
     } else {
       res.send("No hay prospectos");
     }
@@ -72,10 +79,11 @@ app.post("/add", (req, res) => {
     cp: req.body.cp,
     telefono: req.body.telefono,
     rfc: req.body.rfc,
-    documentos: req.body.documentos,
+    documento: req.body.documento,
     estatus: "E",
     observacion: ""
   };
+  console.log(prospectObj)
   connection.query(sql, prospectObj, (err) => {
     if (err) throw err;
     res.send("El cliente se agrego correctamente");
@@ -85,12 +93,21 @@ app.post("/add", (req, res) => {
 app.patch("/update/:id", (req, res) => {
   const { id } = req.params;
   const { estatus, observacion } = req.body;
-  const sql = `UPDATE prospectos SET estatus = '${estatus}', observacion = '${observacion}' WHERE id = ${id}`;
+  console.log(req.body)
+  const sql = `UPDATE prospects SET estatus = '${estatus}', observacion = '${observacion}' WHERE id = ${id}`;
   connection.query(sql, err => {
     if (err) throw err;
     res.send('Prospect updated!');
   });
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.delete("/delete/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = `DELETE FROM prospects WHERE id = ${id}`;
+  connection.query(sql, err => {
+    if (err) throw err;
+    res.send('Prospect deleted!');
+  });
+});
 
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
